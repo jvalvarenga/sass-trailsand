@@ -1,0 +1,33 @@
+.nav__links {
+  position: relative;
+  color: var(--color-link-text);
+  text-decoration: none;
+  font-weight: var(--font-weight-nav-links);
+  font-size: var(--font-size-nav-links);
+  cursor: pointer;
+
+  @media screen and (min-width: 911px) {
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      width: 0%;
+      height: 2px;
+      background-color: var(--color-link-text);
+      transition: 0.2s ease-out;
+    }
+
+    &:hover::after {
+      left: 0;
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: var(--md-size)) {
+    font-size: 1.8rem;
+    font-weight: 600;
+    width: 100%;
+    display: flex;
+  }
+}
