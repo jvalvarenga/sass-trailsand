@@ -1,0 +1,122 @@
+.wrap {
+  display: flex;
+  min-height: min-content;
+  width: 100%;
+}
+
+.content__wrap {
+  width: 45%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 4rem;
+  justify-content: start;
+}
+
+.section__header__wrap {
+  display: flex;
+  width: 100%;
+  height: auto;
+  flex-wrap: wrap;
+}
+
+.section__header {
+  font-size: 3rem;
+  font-weight: var(--font-section-title-weight);
+  line-height: 50px;
+}
+
+.section__text__wrap {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-top: 1rem;
+}
+
+.section__text {
+  font-size: 1.1rem;
+  font-weight: var(--paragraph-font-weight);
+  line-height: var(--paragraph-line-height);
+}
+
+.column__grid__container {
+  height: 100%;
+  width: 55%;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2.5rem;
+  grid-auto-rows: minmax(auto, auto);
+
+  @media screen and (max-width: var(--md-breakpoints)) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.column__grid__items {
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  text-align: start;
+  padding: 2rem;
+  gap: 2rem;
+  background: var(--color-white);
+  border-radius: var(--border-radius);
+  border: var(--border-params) var(--color-light);
+}
+
+.grid__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.grid__title__container {
+  display: block;
+
+  .grid__title {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+}
+
+.grid__paragraph__container {
+  display: block;
+
+  .grid__paragraph {
+    font-size: 1em;
+    font-weight: var(--paragraph-font-weight);
+    line-height: var(--paragraph-line-height);
+  }
+}
+
+.sub__list__wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 2rem;
+}
+
+.list__item {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  gap: 1rem;
+}
+
+.check__icon {
+  color: var(--color-primary);
+  font-size: 1.3rem;
+  flex: none;
+}
+
+.list__title {
+  font-size: 400;
+  font-size: 1rem;
+}
