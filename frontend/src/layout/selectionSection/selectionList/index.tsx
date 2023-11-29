@@ -1,12 +1,22 @@
 'use client'
 import React, {useState} from 'react'
 import styles from './styles.module.scss'
-import SelectionContent from '../selectionContent'
 import Hello from '/public/images/dashboard-image.jpg'
+import Title from 'components/title'
+import Image from 'next/image'
 
 interface SelectionListProps {
   label?: string
   className?: any
+}
+
+interface contentProps {
+  title: string
+  text: string
+  src: any
+  alt: string
+  width: number
+  height: number
 }
 
 export const listItems: SelectionListProps[] = [
@@ -19,12 +29,9 @@ export const listItems: SelectionListProps[] = [
   {
     label: 'Resources',
   },
-  {
-    label: 'Resources',
-  },
 ]
 
-export const selectionContent = [
+export const selectionContent: contentProps[] = [
   {
     src: Hello,
     width: 300,
@@ -62,9 +69,9 @@ export const selectionContent = [
 const SelectionList: React.FC<SelectionListProps> = ({label, className}) => {
   const [isActive, setActive] = useState(0)
   return (
-    <>
-      <div className={styles.container}>
-        <div className={`${styles.selection__button__wrap} ${className}`}>
+    <div className={styles.container}>
+      <div className={styles.left__wrap}>
+        <div className={`${styles.button__wrap} ${className}`}>
           {listItems.map((item, index) => (
             <button
               type="button"
@@ -80,24 +87,42 @@ const SelectionList: React.FC<SelectionListProps> = ({label, className}) => {
             </button>
           ))}
         </div>
+        <div className={styles.content}>
+          {selectionContent.map((item, index) => (
+            <div
+              className={`${styles.accordion__title} ${
+                isActive === index
+                  ? styles.active__content
+                  : styles.content__not__active
+              }`}
+            >
+              <Title variant="h3" light>
+                {item.title}
+              </Title>
+              <p className="light pt-1rem">{item.text}</p>
+            </div>
+          ))}
+        </div>
       </div>
-      {selectionContent.map((item, index) => (
-        <SelectionContent
-          key={index}
-          src={item.src}
-          alt={item.alt}
-          width={item.width}
-          height={item.height}
-          title={item.title}
-          text={item.text}
-          className={
-            isActive === index
-              ? styles.active__content
-              : styles.content__not__active
-          }
-        ></SelectionContent>
-      ))}
-    </>
+      <div className={styles.img__wrap}>
+        {selectionContent.map((item, index) => (
+          <>
+            <Image
+              key={index}
+              src={item.src}
+              alt={item.alt}
+              width={item.width}
+              height={item.height}
+              className={`${styles.img} ${
+                isActive === index
+                  ? styles.active__content
+                  : styles.content__not__active
+              }`}
+            />
+          </>
+        ))}
+      </div>
+    </div>
   )
 }
 

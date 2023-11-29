@@ -1,4 +1,4 @@
-import SectionContainer from 'layout/container/sectionContainer'
+import SectionContainer from 'layout/container'
 import styles from './styles.module.scss'
 import BenefitsCard from 'components/cards/benefitsCard'
 

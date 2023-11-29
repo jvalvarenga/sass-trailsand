@@ -80,11 +80,7 @@ const featureCard: FeatureCardProps[] = [
   },
 ]
 
-const FeatureCard: React.FC<FeatureCardProps> = ({
-  title,
-  paragraph,
-  className,
-}) => {
+const FeatureCard: React.FC = () => {
   return (
     <div className={styles.wrap}>
       <ul className={styles.cards__container}>

@@ -21,7 +21,7 @@
   --color-grey: #d9d9d9;
   --color-dark-grey: #4c4c4c;
   --color-light-grey: #e7e5e6;
-  --color-light: #dae0ec;
+  --color-light: #f3f8f7;
   // --color-light: #e2dccc;
   --color-light-yellow: #fbeeca;
   --color-button-hover: #2a9b5f;
@@ -37,7 +37,7 @@
   --button-nav-padding-horizontal: 30px;
   --button-line-height: 24px;
   --padding-page-hz: 3rem;
-  --section-padding-vertical: 3rem;
+  --section-padding-vt: 9rem;
   --border-radius: 12px;
   --gap-content: 1rem;
 
@@ -55,8 +55,13 @@
   --button-font-size: 1rem;
   --font-size-nav-links: 1rem;
   --font-section-title-size: 2.1rem;
+  --font-h2-size: 2.7rem;
+  --font-h3-size: 2.05rem;
+  --font-h2-weight: 600;
+  --font-h3-weight: 600;
   --font-size-small-title: 1.7rem;
   --font-section-title-weight: 600;
+  --font-size-page: 16px;
 
   // Styles
   --button-border-style: solid;
@@ -81,7 +86,7 @@
 body {
   max-width: var(--max-width);
   min-width: 270px;
-  font-size: 16px;
+  font-size: var(--font-size-page);
   font-style: normal;
   line-height: 1;
   color: var(--color-light-dark-text);
@@ -116,6 +121,26 @@ main {
   justify-content: space-between;
   align-items: center;
   margin-top: var(--nav-header-height);
+}
+
+section {
+  height: auto;
+  width: 100%;
+}
+
+p {
+  font-size: var(--font-size-page);
+  color: inherit;
+  font-weight: 400;
+  line-height: 23px;
+}
+
+.light {
+  color: #ffffff !important;
+}
+
+.pt-1rem {
+  padding-top: 1rem;
 }
 
 .no_select {

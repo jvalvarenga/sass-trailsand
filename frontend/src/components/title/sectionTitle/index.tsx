@@ -1,6 +1,5 @@
 import React, {ReactNode} from 'react'
 import styles from './styles.module.scss'
-import Link from 'next/link'
 
 interface SectionTitleProps {
   children: string

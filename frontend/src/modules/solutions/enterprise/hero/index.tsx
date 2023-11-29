@@ -2,7 +2,7 @@
 import HeroContainer from 'layout/hero/heroContainer'
 import HeroContent from 'layout/hero/heroContent'
 import Image from '/public/images/email-marketing-header.png'
-import ButtonContainer from 'layout/container/buttonContainer'
+import ButtonContainer from 'layout/buttonContainer'
 import Button from 'components/button'
 import styles from './styles.module.scss'
 

@@ -1,5 +1,5 @@
 'use client'
-import SectionContainer from 'layout/container/sectionContainer'
+import SectionContainer from 'layout/container'
 import React, {useState} from 'react'
 import styles from './styles.module.scss'
 import Image from 'next/image'

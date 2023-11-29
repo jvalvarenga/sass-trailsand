@@ -1,6 +1,21 @@
+.section {
+  padding-bottom: var(--section-padding-vt);
+}
+
 .content__wrap {
   display: flex;
   flex-direction: column;
   min-height: min-content;
   width: 100%;
+  height: 100%;
+}
+
+.stylish {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  background-color: #022c25;
+}
+
+.title {
+  inline-size: 50%;
 }

@@ -1,8 +1,8 @@
-import SectionContainer from 'layout/container/sectionContainer'
+import SectionContainer from 'layout/container'
 import styles from './styles.module.scss'
 import Image from 'next/image'
 import peopleImage from '/public/images/people-image.webp'
-import ButtonContainer from 'layout/container/buttonContainer'
+import ButtonContainer from 'layout/buttonContainer'
 import Button from 'components/button'
 
 function HomeCallToAction() {

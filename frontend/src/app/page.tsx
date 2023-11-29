@@ -10,10 +10,10 @@ export default function Home() {
   return (
     <main>
       <HeroHome />
-      <SectionTwo />
       <SectionThree />
-      <SectionFour />
+      <SectionTwo />
       <SectionFive />
+      <SectionFour />
       <SectionSix />
       <HomeCallToAction />
     </main>

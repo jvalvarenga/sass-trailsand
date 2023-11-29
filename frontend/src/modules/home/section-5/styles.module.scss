@@ -1,3 +1,7 @@
+.section {
+  padding-bottom: var(--section-padding-vt);
+}
+
 .content__wrap {
   --gap-content: 1.5rem;
   display: flex;
@@ -25,6 +29,10 @@
   flex-direction: column;
   cursor: default;
   gap: var(--gap-content);
+}
+
+.title__wrap {
+  inline-size: 60%;
 }
 
 .image__container {
