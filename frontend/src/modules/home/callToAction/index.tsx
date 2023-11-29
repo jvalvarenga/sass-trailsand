@@ -1,42 +1,32 @@
-import SectionContainer from 'layout/container'
 import styles from './styles.module.scss'
-import Image from 'next/image'
-import peopleImage from '/public/images/people-image.webp'
 import ButtonContainer from 'layout/buttonContainer'
 import Button from 'components/button'
+import Container from 'layout/container'
+import Title from 'components/title'
 
 function HomeCallToAction() {
   return (
-    <SectionContainer>
-      <div className={styles.content__wrap}>
-        <div className={styles.container}>
-          <div className={styles.left__container}>
-            <div className={styles.image__container}>
-              <Image
-                src={peopleImage}
-                alt=""
-                width={100}
-                height={100}
-                className={styles.image}
-              />
-            </div>
+    <section className={styles.section}>
+      <Container>
+        <div className={styles.content__wrap}>
+          <div className={styles.container}>
+            {/* <div className={styles.image__container}>
+              <Image src={peopleImage} alt="" className={styles.image} />
+            </div> */}
             <div className={styles.title__container}>
-              <h2 className={styles.title}>Grow better with trailsand</h2>
+              <Title variant="h2" className={styles.title}>
+                Your journey to success begins here
+              </Title>
             </div>
-          </div>
-          <div className={styles.right__container}>
             <ButtonContainer>
-              <Button href="/" variant="primary">
-                Start free trial
-              </Button>
-              <Button href="/" variant="secondary">
-                Learn more
+              <Button href="/signup" variant="primary">
+                Start now
               </Button>
             </ButtonContainer>
           </div>
         </div>
-      </div>
-    </SectionContainer>
+      </Container>
+    </section>
   )
 }
 

@@ -1,4 +1,5 @@
 import Navbar from 'layout/header/navbar'
+import Footer from 'layout/footer'
 import '../styles/globals.scss'
 import type {Metadata} from 'next'
 import {Merriweather} from 'next/font/google'
@@ -35,6 +36,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       >
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   )

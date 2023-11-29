@@ -1,6 +1,7 @@
 import React, {ReactNode} from 'react'
 import styles from './styles.module.scss'
 import Image from 'next/image'
+import Title from 'components/title'
 
 interface ContentProps {
   preTitle?: string
@@ -29,8 +30,8 @@ const HeroContent: React.FC<ContentProps> = ({
     <div className={styles.wrap}>
       <div className={styles.content__wrap}>
         <div>
-          <div className={styles.pre__title}>{preTitle}</div>
-          <div className={styles.title}>{title}</div>
+          <p className={styles.pre__title}>{preTitle}</p>
+          <Title variant="h1">{title}</Title>
         </div>
         <div className={styles.text}>{text}</div>
         <div>{children}</div>

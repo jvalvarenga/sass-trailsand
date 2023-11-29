@@ -13,7 +13,6 @@ export default function Home() {
       <SectionThree />
       <SectionTwo />
       <SectionFive />
-      <SectionFour />
       <SectionSix />
       <HomeCallToAction />
     </main>
