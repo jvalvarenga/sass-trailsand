@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react'
 import Dropdown from '../dropdown/index'
 import styles from './styles.module.scss'
 import {IoIosArrowDown} from 'react-icons/io'
-import NavLinks from 'components/ui/links/navLinks'
+import NavLinks from 'components/links/navLinks'
 
 export interface LinkItems {
   title: string
@@ -18,36 +18,12 @@ interface d {
 
 export const menuLinks: LinkItems[] = [
   {
-    title: 'Solutions',
-    url: '/solutions',
-    submenu: [
-      {
-        title: 'Enterprise & medium business',
-        url: '/solutions/enterprise-medium',
-      },
-      {
-        title: 'Startups & small business',
-        url: '/solutions/startups-small',
-      },
-    ],
+    title: 'How it works',
+    url: '/how-it-works',
   },
   {
-    title: 'Pricing',
-    url: '/pricing',
-  },
-  {
-    title: 'Resources',
-    url: '/resources',
-    submenu: [
-      {
-        title: 'About us',
-        url: '/about',
-      },
-      {
-        title: 'Contact us',
-        url: '/support/contact',
-      },
-    ],
+    title: 'Login',
+    url: '/login',
   },
 ]
 

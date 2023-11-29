@@ -1,8 +1,8 @@
 import React from 'react'
 import SectionContainer from 'layout/container/sectionContainer'
 import styles from './styles.module.scss'
-import SectionTitle from 'components/ui/titles/sectionTitle'
-import FeatureCard from 'components/ui/cards/featuresCard'
+import SectionTitle from 'components/titles/sectionTitle'
+import FeatureCard from 'components/cards/featuresCard'
 
 function SectionFive() {
   return (

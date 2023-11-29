@@ -1,6 +1,6 @@
 import SectionContainer from 'layout/container/sectionContainer'
 import styles from './styles.module.scss'
-import BenefitsCard from 'components/ui/cards/benefitsCard'
+import BenefitsCard from 'components/cards/benefitsCard'
 
 function SectionFive() {
   return (

@@ -2,7 +2,7 @@ import SectionContainer from 'layout/container/sectionContainer'
 import React from 'react'
 import styles from './styles.module.scss'
 import SelectionList from 'layout/selectionSection/selectionList'
-import CenterTitle from 'components/ui/titles/centerTitle'
+import CenterTitle from 'components/titles/centerTitle'
 import Image from 'next/image'
 import Icon from '/public/images/icons/block-scale-icon.png'
 

@@ -1,7 +1,7 @@
 import SectionContainer from 'layout/container/sectionContainer'
 import React from 'react'
 import styles from './styles.module.scss'
-import SectionTitle from 'components/ui/titles/sectionTitle'
+import SectionTitle from 'components/titles/sectionTitle'
 
 interface GridCardsProps {
   title?: string

@@ -8,14 +8,14 @@
   z-index: 1000;
 }
 
-.primary__nav {
+.nav {
   -moz-box-align: center;
   align-items: center;
   display: flex;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-  padding-left: var(--page-padding-horizontal);
-  padding-right: var(--page-padding-horizontal);
+  padding-left: var(--padding-page-hz);
+  padding-right: var(--padding-page-hz);
   position: relative;
   -moz-box-pack: justify;
   justify-content: space-between;
@@ -24,13 +24,6 @@
   margin-right: auto;
   width: 100%;
   height: 100%;
-}
-
-.content__container {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  align-items: center;
 }
 
 .logo__link {
@@ -59,13 +52,12 @@
 }
 
 .secondary__nav {
-  display: grid;
+  display: flex;
+  height: 100%;
   width: 100%;
-  -moz-box-align: center;
   align-items: center;
+  justify-content: end;
   transition: 0.2s ease-in-out;
-  grid-template-columns: 1fr auto;
-  margin-left: 3.5rem;
 
   @media screen and (max-width: var(--md-breakpoints)) {
     position: fixed;
@@ -95,8 +87,7 @@
   list-style: none;
   display: flex;
   align-items: center;
-  -moz-box-align: center;
-  gap: 3em;
+  gap: 2.5rem;
   overflow-x: visible;
 
   @media screen and (max-width: var(--md-breakpoints)) {
@@ -112,10 +103,8 @@
 .button__container {
   display: flex;
   align-items: center;
-  max-width: 910px;
   width: max-content;
-  margin-left: auto;
-  gap: 1.5rem;
+  margin-left: 2.5rem;
 
   @media screen and (max-width: var(--md-breakpoints)) {
     position: absolute;

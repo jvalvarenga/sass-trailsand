@@ -1,13 +1,13 @@
 import Navbar from 'layout/header/navbar'
 import '../styles/globals.scss'
 import type {Metadata} from 'next'
-import {Inter} from 'next/font/google'
+import {Merriweather} from 'next/font/google'
 import {Roboto} from 'next/font/google'
 
 // primary font
-const inter = Inter({
+const merriweather = Merriweather({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '700'],
+  weight: ['300', '400', '700', '900'],
   style: ['normal'],
   display: 'swap',
   variable: '--font-secondary',
@@ -31,7 +31,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body
-        className={`${roboto.className} ${roboto.variable} ${inter.variable}`}
+        className={`${roboto.className} ${roboto.variable} ${merriweather.variable}`}
       >
         <Navbar />
         {children}
