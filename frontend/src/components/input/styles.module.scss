@@ -1,0 +1,71 @@
+.field__container {
+  display: flex;
+  flex-direction: column;
+  min-height: min-content;
+  justify-content: start;
+  width: 100%;
+  gap: 0.2em;
+  margin-top: var(--gap-content);
+  margin-bottom: var(--gap-content);
+}
+
+.label {
+  font-size: 0.95rem;
+  color: var(--color-black);
+}
+
+.regular__input {
+  border-radius: 4px;
+  background-clip: padding-box;
+  width: 100%;
+  outline: none;
+  border: 1px solid var(--color-grey);
+  background-color: var(--color-white);
+  padding: 5px;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+
+  &:focus {
+    border-color: var(--color-primary);
+  }
+}
+
+.text__area {
+  padding: 5px;
+  resize: vertical;
+  line-height: 20px;
+}
+
+.select {
+  width: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  background: url('/images/icons/expand-arrow-icon.png') calc(100% - 10px)
+    center/15px no-repeat #fff;
+  display: block;
+
+  .input__container {
+    position: relative;
+    width: 100%;
+  }
+}
+
+.got_error_message {
+  color: var(--color-error);
+  font-size: 1rem;
+  margin-top: 0.4em;
+}
+
+.got_error__input {
+  border-color: var(--color-error);
+  &:focus {
+    border-color: var(--color-error);
+    box-shadow:
+      0 0 3px 1px rgba(194, 57, 52, 0.5),
+      inset 0 0 3px 1px rgba(194, 57, 52, 0.5);
+  }
+}
+
