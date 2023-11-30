@@ -8,8 +8,8 @@ import logo from '/public/images/logo-horizontal.png'
 // import logoMobile from '/public/images/logo.png'
 import Link from 'next/link'
 import Image from 'next/image'
-import Button from 'components/ui/button'
-import NavLinks from 'components/ui/links/navLinks'
+import Button from 'components/button'
+import NavLinks from 'components/links/navLinks'
 
 const Navbar: React.FC = () => {
   const [isOpen, setOpen] = useState<boolean>(false)
@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
   return (
     <header className={styles.header}>
       <nav
-        className={`${styles.primary__nav} ${menuOpen}`}
+        className={`${styles.nav} ${menuOpen}`}
         role="navigation"
         aria-label="Primary Navigation"
       >
@@ -48,38 +48,28 @@ const Navbar: React.FC = () => {
             quality={100}
             className="desktop"
           />
-          {/* <Image
-            src={logoMobile}
-            alt="Atalaso logo"
-            width={42}
-            quality={100}
-            className="mobile"
-          /> */}
         </Link>
-        <div className={styles.content__container}>
-          <nav className={`${styles.secondary__nav} ${menuOpen}`}>
-            <ul className={styles.nav__list}>
-              {menuLinks.map((menu, index) => (
-                <MenuItems
-                  items={menu}
-                  key={index}
-                  onClick={toggle}
-                  linkClick={toggle}
-                />
-              ))}
-            </ul>
-            <div className={styles.button__container}>
-              <NavLinks href="/">Login</NavLinks>
-              <Button
-                href="/demo"
-                variant="primary"
-                className={styles.nav__button}
-              >
-                Free trial
-              </Button>
-            </div>
-          </nav>
-        </div>
+        <nav className={`${styles.secondary__nav} ${menuOpen}`}>
+          <ul className={styles.nav__list}>
+            {menuLinks.map((menu, index) => (
+              <MenuItems
+                items={menu}
+                key={index}
+                onClick={toggle}
+                linkClick={toggle}
+              />
+            ))}
+          </ul>
+          <div className={styles.button__container}>
+            <Button
+              href="/signup"
+              variant="primary"
+              className={styles.nav__button}
+            >
+              Start now
+            </Button>
+          </div>
+        </nav>
         {/* <MobileMenu
           onClick={() => setOpen(!isOpen)}
           className={isOpen ? 'menu__btn open' : 'menu__btn'}
