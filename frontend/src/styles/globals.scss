@@ -25,7 +25,10 @@
   // --color-light: #e2dccc;
   --color-light-yellow: #fbeeca;
   --color-button-hover: #2a9b5f;
+  --color-dark-green: #02231e;
+  --color-green-bg: #022c25;
   --color-footer-bg: #000000;
+  --color-error: #ff0000;
 
   // Sizes
   --max-width: 1800px;
@@ -176,6 +179,10 @@ ol[role='list'] {
 
 li {
   list-style-type: none;
+}
+
+.react-date-picker__wrapper {
+  border: none !important;
 }
 
 /* Set core root defaults */

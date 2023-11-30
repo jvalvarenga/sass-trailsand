@@ -21,7 +21,10 @@
   outline: none;
   border: 1px solid var(--color-grey);
   background-color: var(--color-white);
-  padding: 5px;
+  padding: 6px;
+  height: 2.2rem;
+  font-size: 16px;
+  color: var(--color-dark-green);
   transition:
     border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
@@ -29,11 +32,24 @@
   &:focus {
     border-color: var(--color-primary);
   }
+
+  &::placeholder,
+  textarea::placeholder {
+    font-size: 16px;
+    color: #999999;
+    opacity: 1 !important;
+  }
+
+  &:-moz-placeholder {
+    color: #999999;
+    opacity: 1 !important;
+  }
 }
 
 .text__area {
-  padding: 5px;
+  padding: 6px;
   resize: vertical;
+  font-size: 16px;
   line-height: 20px;
 }
 
@@ -43,20 +59,36 @@
   -moz-appearance: none;
   appearance: none;
   cursor: pointer;
+  font-size: 16px;
+  color: #999999;
   background: url('/images/icons/expand-arrow-icon.png') calc(100% - 10px)
     center/15px no-repeat #fff;
   display: block;
 
-  .input__container {
-    position: relative;
-    width: 100%;
+  &:valid {
+    color: var(--color-dark-green);
   }
+
+  &:invalid {
+    color: #999999;
+  }
+
+  option[value=''][disabled] {
+    display: none;
+  }
+
+  option {
+    color: #000000;
+  }
+}
+
+.error_message__wrap {
+  margin-top: 0.5em;
 }
 
 .got_error_message {
   color: var(--color-error);
   font-size: 1rem;
-  margin-top: 0.4em;
 }
 
 .got_error__input {
@@ -68,4 +100,3 @@
       inset 0 0 3px 1px rgba(194, 57, 52, 0.5);
   }
 }
-

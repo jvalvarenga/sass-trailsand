@@ -46,7 +46,7 @@ const Input: React.FC<InputProps> = ({
                   autocorrect="on"
                   spellcheck="true"
                   placeholder={`${placeholder} ${requiredField}`}
-                  className={`${gotError} ${inputClass}`}
+                  className={`${styles.regular__input} ${gotError} ${inputClass}`}
                   {...(ariaRequired
                     ? {'aria-required': 'true'}
                     : {'aria-required': 'false'})}
@@ -64,7 +64,7 @@ const Input: React.FC<InputProps> = ({
                   id={id}
                   name={name}
                   placeholder={`${placeholder} ${requiredField}`}
-                  className={`select ${gotError} ${inputClass}`}
+                  className={`${styles.select} ${styles.regular__input} ${gotError} ${inputClass}`}
                   {...(ariaRequired
                     ? {'aria-required': 'true'}
                     : {'aria-required': 'false'})}
@@ -79,12 +79,13 @@ const Input: React.FC<InputProps> = ({
                     disabled={true}
                     // aria-hidden={true}
                     selected
-                    className={styles.first__option}
                   >
                     {`${placeholder} ${requiredField}`}
                   </option>
                   {options?.map((item) => (
-                    <option key={item.value}>{item.label}</option>
+                    <option key={item.value} className={styles.selected}>
+                      {item.label}
+                    </option>
                   ))}
                 </select>
               </>
@@ -96,7 +97,7 @@ const Input: React.FC<InputProps> = ({
                   id={id}
                   name={name}
                   placeholder={`${placeholder} ${requiredField}`}
-                  className={`${gotError} ${inputClass}`}
+                  className={`${styles.regular__input} ${gotError} ${inputClass}`}
                   {...(ariaRequired
                     ? {'aria-required': 'true'}
                     : {'aria-required': 'false'})}
@@ -114,9 +115,11 @@ const Input: React.FC<InputProps> = ({
         }
       })()}
       {error && (
-        <span className={styles.got_error_message} role="alert">
-          {error.message}
-        </span>
+        <div className={styles.error_message__wrap}>
+          <span className={styles.got_error_message} role="alert">
+            {error.message}
+          </span>
+        </div>
       )}
     </>
   )

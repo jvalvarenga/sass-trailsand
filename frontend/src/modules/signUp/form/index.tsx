@@ -6,6 +6,18 @@ import {useForm} from 'react-hook-form'
 import axios from 'axios'
 import Button from 'components/button'
 import ButtonLoader from 'components/loader/btnLoader'
+import DatePicker from 'react-date-picker'
+import 'react-date-picker/dist/DatePicker.css'
+import 'react-calendar/dist/Calendar.css'
+
+//  Date picker
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider'
+import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns'
+//
+
+import Title from 'components/title'
+// import Link from 'next/link'
+import Checkbox from 'components/input/checkbox'
 // import Checkbox from 'components/ui/input/checkbox'
 // import Modal from '../modal'
 // import ButtonLoader from 'components/ui/loading/button'
@@ -13,10 +25,15 @@ import ButtonLoader from 'components/loader/btnLoader'
 // import 'react-toastify/dist/ReactToastify.css'
 // import LinkContent from 'utils/links/linkContent'
 
+type ValuePiece = Date | null
+
+type Value = ValuePiece | [ValuePiece, ValuePiece]
+
 type FormValues = {
   firstName: string
   lastName: string
   email: string
+  birthDate: string
   password: string
   country: string
   acceptTerms: boolean
@@ -25,6 +42,7 @@ type FormValues = {
 const SignUpForm: React.FC = () => {
   const [countries, setCountries] = useState<FormValues[]>([])
   const [isLoading, setLoading] = useState(false)
+  const [dateValue, setDateValue] = useState<Value>(new Date())
   const [modalOpen, setModalOpen] = useState(false)
 
   const {
@@ -46,6 +64,14 @@ const SignUpForm: React.FC = () => {
     value: item.country,
     label: item.country,
   }))
+
+  console.log('hello world!', dateValue)
+
+  useEffect(() => {
+    if (dateValue == '2006') {
+      console.log('birth date not allowed')
+    }
+  }, [])
 
   // Notify toaster
   // const notify = () => {
@@ -90,64 +116,63 @@ const SignUpForm: React.FC = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.form__wrap}>
+        <div>
+          <Title variant="h1" light className={styles.title}>
+            Let's begin your success journey!
+          </Title>
+        </div>
         <form
           id="signup-form"
           onSubmit={handleSubmit(onSubmit)}
           className={styles.form}
         >
           <div className={styles.input__field}>
-            <div className={styles.col__2}>
-              <div className={styles.field}>
-                <Input
-                  placeholder="First name"
-                  id="first-name"
-                  name="firstName"
-                  type="text"
-                  variant="text"
-                  ariaRequired="true"
-                  error={errors.firstName}
-                  ariaInvalid={errors.firstName ? 'true' : 'false'}
-                  register={register('firstName', {
-                    required: {
-                      value: true,
-                      message: 'Please enter your name',
-                    },
-                    maxLength: {
-                      value: 30,
-                      message: 'This name is too long',
-                    },
-                  })}
-                />
-              </div>
+            <div className={styles.field}>
+              <Input
+                placeholder="First name"
+                id="first-name"
+                name="firstName"
+                type="text"
+                variant="text"
+                ariaRequired="true"
+                error={errors.firstName}
+                ariaInvalid={errors.firstName ? 'true' : 'false'}
+                register={register('firstName', {
+                  required: {
+                    value: true,
+                    message: 'Please enter your name',
+                  },
+                  maxLength: {
+                    value: 30,
+                    message: 'This name is too long',
+                  },
+                })}
+              />
             </div>
-            <div className={styles.col__2}>
-              <div className={styles.field}>
-                <Input
-                  placeholder="Last name"
-                  id="last-name"
-                  type="text"
-                  name="lastName"
-                  variant="text"
-                  inputClass={
-                    errors.lastName
-                      ? 'got_error regular_input'
-                      : 'regular_input'
-                  }
-                  error={errors.lastName}
-                  ariaRequired="true"
-                  ariaInvalid={errors.lastName ? 'true' : 'false'}
-                  register={register('lastName', {
-                    required: {
-                      value: true,
-                      message: 'Please enter your last name',
-                    },
-                    maxLength: {
-                      value: 40,
-                      message: 'This is too long',
-                    },
-                  })}
-                />
-              </div>
+            <div className={styles.field}>
+              <Input
+                placeholder="Last name"
+                id="last-name"
+                type="text"
+                name="lastName"
+                variant="text"
+                inputClass={
+                  errors.lastName ? 'got_error regular_input' : 'regular_input'
+                }
+                error={errors.lastName}
+                ariaRequired="true"
+                ariaInvalid={errors.lastName ? 'true' : 'false'}
+                register={register('lastName', {
+                  required: {
+                    value: true,
+                    message: 'Please enter your last name',
+                  },
+                  maxLength: {
+                    value: 40,
+                    message: 'This is too long',
+                  },
+                })}
+              />
             </div>
           </div>
           <div className={styles.input__field}>
@@ -238,11 +263,30 @@ const SignUpForm: React.FC = () => {
           </div>
           <div className={styles.input__field}>
             <div className={styles.field}>
-              {/* <Checkbox
+              <div className={styles.date__field}>
+                <h4>Date of birth</h4>
+                <p>
+                  This will not be shown publicly. Confirm your age, you must be
+                  18 years or older to create an account.
+                </p>
+              </div>
+              <DatePicker
+                onChange={setDateValue}
+                value={dateValue}
+                id="birthDate"
+                aria-required="true"
+                aria-invalid={errors.birthDate ? 'true' : 'false'}
+                className={styles.date__picker}
+              />
+            </div>
+          </div>
+          <div className={styles.input__field}>
+            <div className={styles.field}>
+              <Checkbox
                 label={
                   <>
-                    I have read and agree to the{' '}
-                    <Link
+                    I agree with the Privacy Notice and Terms
+                    {/* <Link
                       href="/about-atalaso/privacy-notice"
                       className="animsition-link link-common"
                     >
@@ -254,23 +298,24 @@ const SignUpForm: React.FC = () => {
                       className="animsition-link link-common"
                     >
                       Terms of Use
-                    </Link>
+                    </Link> */}
                   </>
                 }
                 id="accept-terms"
                 name="acceptTerms"
                 error={errors.acceptTerms}
                 ariaRequired="true"
+                light
                 register={register('acceptTerms', {
                   required: {
                     value: true,
                     message: 'Please accept terms',
                   },
                 })}
-              /> */}
+              />
             </div>
           </div>
-          <div>
+          <div className={styles.btn__container}>
             <Button
               isButton
               form="signup-form"
