@@ -1,9 +1,10 @@
+import SignUp from 'modules/signUp'
 import HeroEnterprise from 'modules/solutions/enterprise/hero'
 
-export default function Signup() {
+export default function SignupPage() {
   return (
     <main>
-      <HeroEnterprise />
+      <SignUp />
     </main>
   )
 }

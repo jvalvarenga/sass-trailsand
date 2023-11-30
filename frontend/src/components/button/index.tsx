@@ -3,43 +3,52 @@ import styles from './styles.module.scss'
 import Link from 'next/link'
 
 interface ButtonProps {
-  href?: string
+  href?: any
   children: ReactNode
   isButton?: boolean
   onClick?: () => void
-  variant: 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary'
   className?: any
+  form: string
+  disabled: any
+  type: 'button' | 'reset' | 'submit' | undefined
 }
 
 const Button: React.FC<ButtonProps> = ({
   href,
+  type,
   children,
   isButton,
   onClick,
+  form,
+  disabled,
   variant,
   className,
 }) => {
   const buttonClassName =
     variant === 'secondary' ? styles.secondary : styles.primary
 
-  if (isButton) {
-    return (
-      <button
-        className={`${styles.button} ${buttonClassName} ${className}`}
-        onClick={onClick}
-      >
-        {children}
-      </button>
-    )
-  }
-
   return (
-    <Link
-      href={href}
-      className={`${styles.button} ${buttonClassName} ${className}`}
-    >
-      {children}
-    </Link>
+    <>
+      {isButton ? (
+        <button
+          className={`${styles.button} ${buttonClassName} ${className}`}
+          type={type}
+          onClick={onClick}
+          form={form}
+          disabled={disabled}
+        >
+          {children}
+        </button>
+      ) : (
+        <Link
+          href={href}
+          className={`${styles.button} ${buttonClassName} ${className}`}
+        >
+          <span>{children}</span>
+        </Link>
+      )}
+    </>
   )
 }
 
