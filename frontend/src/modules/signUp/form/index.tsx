@@ -2,13 +2,14 @@
 import React, {useEffect, useState} from 'react'
 import Input from 'components/input'
 import styles from './styles.module.scss'
-import {useForm} from 'react-hook-form'
 import axios from 'axios'
 import Button from 'components/button'
 import ButtonLoader from 'components/loader/btnLoader'
 import Title from 'components/title'
-// import Link from 'next/link'
+import {useFormik, Formik} from 'formik'
 import Checkbox from 'components/input/checkbox'
+import {basicSchema} from 'schema/formValidation'
+// import Link from 'next/link'
 // import Checkbox from 'components/ui/input/checkbox'
 // import Modal from '../modal'
 // import ButtonLoader from 'components/ui/loading/button'
@@ -24,10 +25,12 @@ type FormValues = {
   firstName: string
   lastName: string
   email: string
-  birthDay: string
-  birthMonth: string
-  birthYear: string
+  month: string
+  monthId: number
+  day: string
+  year: string
   password: string
+  confirmPassword: string
   country: string
   acceptTerms: boolean
 }
@@ -35,15 +38,12 @@ type FormValues = {
 const SignUpForm: React.FC = () => {
   const [countries, setCountries] = useState<FormValues[]>([])
   const [isLoading, setLoading] = useState(false)
-  const [dateValue, setDateValue] = useState(new Date())
+  const [monthValue, setMonthValue] = useState<FormValues[]>([])
+  const [selectedMonth, setSelectedMonth] = useState('f')
+  const [daysOptions, setDaysOptions] = useState<
+    {value: string; label: string}[]
+  >([])
   const [modalOpen, setModalOpen] = useState(false)
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: {errors},
-  } = useForm<FormValues>()
 
   const DisableButton = isLoading ? styles.disabled : ''
 
@@ -51,12 +51,61 @@ const SignUpForm: React.FC = () => {
   useEffect(() => {
     const countryData = require('../../../data/country.json') as FormValues[]
     setCountries(countryData)
+
+    const birthDateData =
+      require('../../../data/date/birthDate.json') as FormValues[]
+    setMonthValue(birthDateData)
   }, [])
 
   const countryOptions = countries.map((item) => ({
     value: item.country,
     label: item.country,
   }))
+
+  const monthOptions = monthValue.map((item, index) => ({
+    key: index,
+    value: item.month,
+    label: item.month,
+  }))
+
+  // const days = Array.from({length: 31}, (_, index) => (index + 1).toString())
+  const years = Array.from({length: 115}, (_, index) =>
+    (2005 - index).toString()
+  )
+
+  const daysInMonth = (selectedMonth: string, year: number) => {
+    if (selectedMonth === 'February') {
+      // February
+      return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0 ? 29 : 28
+    } else if (
+      ['April', 'June', 'September', 'November'].includes(selectedMonth)
+    ) {
+      // April, June, September, November
+      return 30
+    } else {
+      // All other monthIds
+      return 31
+    }
+  }
+
+  const handleMonthChange = (e: any) => {
+    setSelectedMonth(e.target.value)
+  }
+
+  console.log('Hello world!', selectedMonth)
+
+  const days = (selectedMonth: string, selectedYear: string) => {
+    const numDays = daysInMonth(String(selectedMonth), Number(selectedYear))
+    return Array.from({length: numDays}, (_, index) => ({
+      value: (index + 1).toString(),
+      label: (index + 1).toString(),
+    }))
+  }
+
+  useEffect(() => {
+    const updatedDaysOptions = days(selectedMonth, values.year)
+    setDaysOptions(updatedDaysOptions)
+  }, [selectedMonth, years])
 
   // Notify toaster
   // const notify = () => {
@@ -73,7 +122,7 @@ const SignUpForm: React.FC = () => {
     }
   }
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: FormValues, actions: any) => {
     // 'use server'
     setLoading(true)
     const config = {
@@ -88,7 +137,7 @@ const SignUpForm: React.FC = () => {
     try {
       const response = await axios(config)
       if (response.status == 200) {
-        reset()
+        actions.resetForm()
         goToTop()
         setModalOpen(true)
       }
@@ -97,6 +146,25 @@ const SignUpForm: React.FC = () => {
     }
     setLoading(false)
   }
+
+  const {values, errors, isSubmitting, handleBlur, handleChange, handleSubmit} =
+    useFormik({
+      initialValues: {
+        email: '',
+        password: '',
+        confirmPassword: '',
+        firstName: '',
+        lastName: '',
+        month: '',
+        monthId: 0,
+        day: '',
+        year: '',
+        country: '',
+        acceptTerms: false,
+      },
+      validationSchema: basicSchema,
+      onSubmit,
+    })
 
   return (
     <div className={styles.wrapper}>
@@ -108,7 +176,8 @@ const SignUpForm: React.FC = () => {
         </div>
         <form
           id="signup-form"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit}
+          autoComplete="off"
           className={styles.form}
         >
           <div className={styles.input__field}>
@@ -118,20 +187,16 @@ const SignUpForm: React.FC = () => {
                 id="first-name"
                 name="firstName"
                 type="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.firstName}
                 variant="text"
-                ariaRequired="true"
+                inputClass={
+                  errors.lastName ? 'got_error regular_input' : 'regular_input'
+                }
                 error={errors.firstName}
+                ariaRequired="true"
                 ariaInvalid={errors.firstName ? 'true' : 'false'}
-                register={register('firstName', {
-                  required: {
-                    value: true,
-                    message: 'Please enter your name',
-                  },
-                  maxLength: {
-                    value: 30,
-                    message: 'This name is too long',
-                  },
-                })}
               />
             </div>
             <div className={styles.field}>
@@ -140,6 +205,9 @@ const SignUpForm: React.FC = () => {
                 id="last-name"
                 type="text"
                 name="lastName"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.lastName}
                 variant="text"
                 inputClass={
                   errors.lastName ? 'got_error regular_input' : 'regular_input'
@@ -147,16 +215,6 @@ const SignUpForm: React.FC = () => {
                 error={errors.lastName}
                 ariaRequired="true"
                 ariaInvalid={errors.lastName ? 'true' : 'false'}
-                register={register('lastName', {
-                  required: {
-                    value: true,
-                    message: 'Please enter your last name',
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: 'This is too long',
-                  },
-                })}
               />
             </div>
           </div>
@@ -168,23 +226,15 @@ const SignUpForm: React.FC = () => {
                 type="email"
                 name="email"
                 variant="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.email}
                 inputClass={
                   errors.email ? 'got_error regular_input' : 'regular_input'
                 }
                 error={errors.email}
                 ariaRequired="true"
                 ariaInvalid={errors.email ? 'true' : 'false'}
-                register={register('email', {
-                  required: {
-                    value: true,
-                    message: 'Please provide an email',
-                  },
-                  pattern: {
-                    value:
-                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                    message: 'Please enter a valid email',
-                  },
-                })}
               />
             </div>
           </div>
@@ -192,25 +242,18 @@ const SignUpForm: React.FC = () => {
             <div className={styles.field}>
               <Input
                 label="Country/location"
-                id="location"
-                name="location"
+                id="country"
+                name="country"
                 variant="select"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.country}
                 inputClass={
                   errors.country ? 'got_error regular_input' : 'regular_input'
                 }
                 error={errors.country}
                 ariaRequired="true"
                 ariaInvalid={errors.country ? 'true' : 'false'}
-                register={register('country', {
-                  required: {
-                    value: true,
-                    message: 'Please provide a location',
-                  },
-                  minLength: {
-                    value: 2,
-                    message: 'Please provide a location',
-                  },
-                })}
                 options={countryOptions}
               />
             </div>
@@ -223,31 +266,37 @@ const SignUpForm: React.FC = () => {
                 type="password"
                 name="password"
                 variant="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
                 inputClass={
                   errors.password ? 'got_error regular_input' : 'regular_input'
                 }
                 error={errors.password}
                 ariaRequired="true"
                 ariaInvalid={errors.password ? 'true' : 'false'}
-                register={register('password', {
-                  required: {
-                    value: true,
-                    message: 'Please enter a password',
-                  },
-                  minLength: {
-                    value: 8,
-                    message: 'Your password must be at least 8 characters long',
-                  },
-                  maxLength: {
-                    value: 25,
-                    message: 'This password is too long',
-                  },
-                  pattern: {
-                    value:
-                      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
-                    message: 'Your password must contain ',
-                  },
-                })}
+              />
+            </div>
+          </div>
+          <div className={styles.input__field}>
+            <div className={styles.field}>
+              <Input
+                label="Confirm password"
+                id="confirmPassword"
+                type="password"
+                name="confirmPassword"
+                variant="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.confirmPassword}
+                inputClass={
+                  errors.confirmPassword
+                    ? 'got_error regular_input'
+                    : 'regular_input'
+                }
+                error={errors.confirmPassword}
+                ariaRequired="true"
+                ariaInvalid={errors.confirmPassword ? 'true' : 'false'}
               />
             </div>
           </div>
@@ -263,71 +312,60 @@ const SignUpForm: React.FC = () => {
               <div className={styles.input__field}>
                 <div className={styles.field}>
                   <Input
-                    label="Day"
-                    id="birthDay"
-                    name="birthDay"
+                    label="Month"
+                    id="month"
+                    name="month"
                     variant="select"
+                    onChange={(e: any) => {
+                      handleChange(e)
+                      handleMonthChange(e)
+                    }}
+                    onBlur={handleBlur}
+                    value={values.month}
                     inputClass={
-                      errors.birthDay
-                        ? 'got_error regular_input'
-                        : 'regular_input'
+                      errors.month ? 'got_error regular_input' : 'regular_input'
                     }
-                    error={errors.birthDay}
+                    error={errors.month}
                     ariaRequired="true"
-                    ariaInvalid={errors.birthDay ? 'true' : 'false'}
-                    register={register('birthDay', {
-                      required: {
-                        value: true,
-                        message: 'Please confirm your birth day',
-                      },
-                    })}
-                    options={countryOptions}
+                    ariaInvalid={errors.month ? 'true' : 'false'}
+                    options={monthOptions}
                   />
                 </div>
                 <div className={styles.field}>
                   <Input
-                    label="Month"
-                    id="birthMonth"
-                    name="birthMonth"
+                    label="Day"
+                    id="day"
+                    name="day"
                     variant="select"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.day}
                     inputClass={
-                      errors.birthMonth
-                        ? 'got_error regular_input'
-                        : 'regular_input'
+                      errors.day ? 'got_error regular_input' : 'regular_input'
                     }
-                    error={errors.birthMonth}
+                    error={errors.day}
                     ariaRequired="true"
-                    ariaInvalid={errors.birthMonth ? 'true' : 'false'}
-                    register={register('birthMonth', {
-                      required: {
-                        value: true,
-                        message: 'Please confirm your birth month',
-                      },
-                    })}
-                    options={countryOptions}
+                    ariaInvalid={errors.day ? 'true' : 'false'}
+                    // options={days.map((day) => ({value: day, label: day}))}
+                    options={daysOptions}
                   />
                 </div>
                 <div className={styles.field}>
                   <Input
                     label="Year"
-                    id="birthYear"
-                    name="birthYear"
+                    id="year"
+                    name="year"
                     variant="select"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.year}
                     inputClass={
-                      errors.birthYear
-                        ? 'got_error regular_input'
-                        : 'regular_input'
+                      errors.year ? 'got_error regular_input' : 'regular_input'
                     }
-                    error={errors.birthYear}
+                    error={errors.year}
                     ariaRequired="true"
-                    ariaInvalid={errors.birthYear ? 'true' : 'false'}
-                    register={register('birthYear', {
-                      required: {
-                        value: true,
-                        message: 'Please confirm your birth year',
-                      },
-                    })}
-                    options={countryOptions}
+                    ariaInvalid={errors.year ? 'true' : 'false'}
+                    options={years.map((year) => ({value: year, label: year}))}
                   />
                 </div>
               </div>
@@ -356,15 +394,12 @@ const SignUpForm: React.FC = () => {
                 }
                 id="accept-terms"
                 name="acceptTerms"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.acceptTerms}
                 error={errors.acceptTerms}
                 ariaRequired="true"
                 light
-                register={register('acceptTerms', {
-                  required: {
-                    value: true,
-                    message: 'Please accept terms',
-                  },
-                })}
               />
             </div>
           </div>

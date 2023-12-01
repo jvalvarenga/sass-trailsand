@@ -6,7 +6,9 @@ interface CheckboxProps {
   id: string
   name: string
   inputClass?: any
-  register: any
+  onChange?: any
+  onBlur?: any
+  value?: any
   error?: any
   ariaRequired: 'true' | 'false'
   ariaInvalid?: any
@@ -18,7 +20,9 @@ const Checkbox: React.FC<CheckboxProps> = ({
   id,
   name,
   inputClass,
-  register,
+  onChange,
+  onBlur,
+  value,
   error,
   ariaRequired,
   ariaInvalid,
@@ -33,6 +37,9 @@ const Checkbox: React.FC<CheckboxProps> = ({
           id={id}
           type="checkbox"
           name={name}
+          onChange={onChange}
+          onBlur={onBlur}
+          value={value}
           className={`${styles.checkbox} ${colorError} ${inputClass}`}
           {...(ariaRequired
             ? {'aria-required': 'true'}
@@ -40,7 +47,6 @@ const Checkbox: React.FC<CheckboxProps> = ({
           {...(ariaInvalid
             ? {'aria-invalid': 'true'}
             : {'aria-invalid': 'false'})}
-          {...register}
         />
         <div className={styles.label__container}>
           <label htmlFor={id} className={`${styles.label} ${colorLight}`}>
@@ -50,7 +56,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
       </div>
       {error && (
         <span className={styles.got_error_message} role="alert">
-          {error.message}{' '}
+          {error}
         </span>
       )}
     </div>

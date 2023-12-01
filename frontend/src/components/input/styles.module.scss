@@ -13,16 +13,19 @@
   position: relative;
   width: auto;
 
-  .regular__input:valid ~ span,
   .regular__input:focus ~ span {
     color: var(--color-button-hover);
+  }
+
+  .valid__field ~ span,
+  .regular__input:focus ~ span {
     transform: translateX(10px) translateY(-6px);
     font-size: 0.88rem;
     padding: 0 10px;
     background-color: var(--color-green-bg);
   }
 
-  .got_error__input:valid ~ span,
+  .got_error__input ~ span,
   .got_error__input:focus ~ span {
     color: var(--color-error);
   }
@@ -35,7 +38,7 @@
   padding: 13px 8px;
   pointer-events: none;
   font-size: 1rem;
-  color: #999999;
+  color: #888888;
   transition: 0.3s;
 }
 
@@ -61,12 +64,12 @@
   &::placeholder,
   textarea::placeholder {
     font-size: 16px;
-    color: #999999;
+    color: #888888;
     opacity: 1 !important;
   }
 
   &:-moz-placeholder {
-    color: #999999;
+    color: #888888;
     opacity: 1 !important;
   }
 }
@@ -85,18 +88,10 @@
   appearance: none;
   cursor: pointer;
   font-size: 16px;
-  color: #999999;
+  color: #ffffff;
   background: url('/images/icons/expand-arrow-icon.png') calc(100% - 10px)
     center/15px no-repeat transparent;
   display: block;
-
-  &:valid {
-    color: var(--color-dark-green);
-  }
-
-  &:invalid {
-    color: #999999;
-  }
 
   option[value=''][disabled] {
     display: none;

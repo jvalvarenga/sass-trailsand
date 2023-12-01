@@ -7,7 +7,9 @@ interface InputProps {
   type?: string
   name: string
   inputClass?: any
-  register: any
+  onChange?: any
+  onBlur?: any
+  value?: any
   error?: any
   ariaRequired: 'true' | 'false'
   ariaInvalid?: any
@@ -22,7 +24,9 @@ const Input: React.FC<InputProps> = ({
   type,
   name,
   inputClass,
-  register,
+  onChange,
+  onBlur,
+  value,
   error,
   ariaRequired,
   ariaInvalid,
@@ -32,6 +36,7 @@ const Input: React.FC<InputProps> = ({
 }) => {
   const gotError = error ? styles.got_error__input : ''
   const requiredField = ariaRequired == 'true' ? '*' : ''
+  const valueField = value?.length >= 1 ? styles.valid__field : ''
   return (
     <>
       <div className={styles.input__box}>
@@ -44,16 +49,18 @@ const Input: React.FC<InputProps> = ({
                     id={id}
                     type={type}
                     name={name}
-                    autocorrect="on"
-                    spellcheck="true"
-                    className={`${styles.regular__input} ${gotError} ${inputClass}`}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    autoCorrect="on"
+                    spellCheck="true"
+                    className={`${styles.regular__input} ${valueField} ${gotError} ${inputClass}`}
                     {...(ariaRequired
                       ? {'aria-required': 'true'}
                       : {'aria-required': 'false'})}
                     {...(ariaInvalid
                       ? {'aria-invalid': 'true'}
                       : {'aria-invalid': 'false'})}
-                    {...register}
                   />
                   <span aria-hidden="true" className={styles.label}>
                     {`${label} ${requiredField}`}
@@ -66,14 +73,16 @@ const Input: React.FC<InputProps> = ({
                   <select
                     id={id}
                     name={name}
-                    className={`${styles.select} ${styles.regular__input} ${gotError} ${inputClass}`}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    className={`${styles.select} ${valueField} ${styles.regular__input} ${gotError} ${inputClass}`}
                     {...(ariaRequired
                       ? {'aria-required': 'true'}
                       : {'aria-required': 'false'})}
                     {...(ariaInvalid
                       ? {'aria-invalid': 'true'}
                       : {'aria-invalid': 'false'})}
-                    {...register}
                   >
                     <option
                       value=""
@@ -99,7 +108,10 @@ const Input: React.FC<InputProps> = ({
                   <textarea
                     id={id}
                     name={name}
-                    className={`${styles.regular__input} ${gotError} ${inputClass}`}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    className={`${styles.regular__input} ${valueField} ${gotError} ${inputClass}`}
                     {...(ariaRequired
                       ? {'aria-required': 'true'}
                       : {'aria-required': 'false'})}
@@ -108,7 +120,6 @@ const Input: React.FC<InputProps> = ({
                       : {'aria-invalid': 'false'})}
                     rows={rows}
                     spellCheck="false"
-                    {...register}
                   />
                   <span aria-hidden="true" className={styles.label}>
                     {`${label} ${requiredField}`}
@@ -123,7 +134,7 @@ const Input: React.FC<InputProps> = ({
       {error && (
         <div className={styles.error_message__wrap}>
           <span className={styles.got_error_message} role="alert">
-            {error.message}
+            {error}
           </span>
         </div>
       )}
