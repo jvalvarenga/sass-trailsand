@@ -25,6 +25,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
   light,
 }) => {
   const colorLight = light ? styles.color__light : ''
+  const colorError = error ? styles.color__error : ''
   return (
     <div className={styles.checkbox__wrap}>
       <div className={styles.input__container}>
@@ -32,7 +33,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
           id={id}
           type="checkbox"
           name={name}
-          className={`${styles.checkbox} ${inputClass}`}
+          className={`${styles.checkbox} ${colorError} ${inputClass}`}
           {...(ariaRequired
             ? {'aria-required': 'true'}
             : {'aria-required': 'false'})}

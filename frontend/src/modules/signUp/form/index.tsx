@@ -6,15 +6,6 @@ import {useForm} from 'react-hook-form'
 import axios from 'axios'
 import Button from 'components/button'
 import ButtonLoader from 'components/loader/btnLoader'
-import DatePicker from 'react-date-picker'
-import 'react-date-picker/dist/DatePicker.css'
-import 'react-calendar/dist/Calendar.css'
-
-//  Date picker
-import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider'
-import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns'
-//
-
 import Title from 'components/title'
 // import Link from 'next/link'
 import Checkbox from 'components/input/checkbox'
@@ -25,15 +16,17 @@ import Checkbox from 'components/input/checkbox'
 // import 'react-toastify/dist/ReactToastify.css'
 // import LinkContent from 'utils/links/linkContent'
 
-type ValuePiece = Date | null
+// type ValuePiece = Date | null
 
-type Value = ValuePiece | [ValuePiece, ValuePiece]
+// type Value = ValuePiece | [ValuePiece, ValuePiece]
 
 type FormValues = {
   firstName: string
   lastName: string
   email: string
-  birthDate: string
+  birthDay: string
+  birthMonth: string
+  birthYear: string
   password: string
   country: string
   acceptTerms: boolean
@@ -42,7 +35,7 @@ type FormValues = {
 const SignUpForm: React.FC = () => {
   const [countries, setCountries] = useState<FormValues[]>([])
   const [isLoading, setLoading] = useState(false)
-  const [dateValue, setDateValue] = useState<Value>(new Date())
+  const [dateValue, setDateValue] = useState(new Date())
   const [modalOpen, setModalOpen] = useState(false)
 
   const {
@@ -64,14 +57,6 @@ const SignUpForm: React.FC = () => {
     value: item.country,
     label: item.country,
   }))
-
-  console.log('hello world!', dateValue)
-
-  useEffect(() => {
-    if (dateValue == '2006') {
-      console.log('birth date not allowed')
-    }
-  }, [])
 
   // Notify toaster
   // const notify = () => {
@@ -129,7 +114,7 @@ const SignUpForm: React.FC = () => {
           <div className={styles.input__field}>
             <div className={styles.field}>
               <Input
-                placeholder="First name"
+                label="First name"
                 id="first-name"
                 name="firstName"
                 type="text"
@@ -151,7 +136,7 @@ const SignUpForm: React.FC = () => {
             </div>
             <div className={styles.field}>
               <Input
-                placeholder="Last name"
+                label="Last name"
                 id="last-name"
                 type="text"
                 name="lastName"
@@ -178,7 +163,7 @@ const SignUpForm: React.FC = () => {
           <div className={styles.input__field}>
             <div className={styles.field}>
               <Input
-                placeholder="Email"
+                label="Email"
                 id="email"
                 type="email"
                 name="email"
@@ -206,7 +191,7 @@ const SignUpForm: React.FC = () => {
           <div className={styles.input__field}>
             <div className={styles.field}>
               <Input
-                placeholder="Country/location"
+                label="Country/location"
                 id="location"
                 name="location"
                 variant="select"
@@ -233,7 +218,7 @@ const SignUpForm: React.FC = () => {
           <div className={styles.input__field}>
             <div className={styles.field}>
               <Input
-                placeholder="Password"
+                label="Password"
                 id="password"
                 type="password"
                 name="password"
@@ -247,7 +232,7 @@ const SignUpForm: React.FC = () => {
                 register={register('password', {
                   required: {
                     value: true,
-                    message: 'Please provide an password',
+                    message: 'Please enter a password',
                   },
                   minLength: {
                     value: 8,
@@ -257,27 +242,95 @@ const SignUpForm: React.FC = () => {
                     value: 25,
                     message: 'This password is too long',
                   },
+                  pattern: {
+                    value:
+                      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
+                    message: 'Your password must contain ',
+                  },
                 })}
               />
             </div>
           </div>
           <div className={styles.input__field}>
             <div className={styles.field}>
-              <div className={styles.date__field}>
+              <div className={styles.date__field__text}>
                 <h4>Date of birth</h4>
                 <p>
                   This will not be shown publicly. Confirm your age, you must be
                   18 years or older to create an account.
                 </p>
               </div>
-              <DatePicker
-                onChange={setDateValue}
-                value={dateValue}
-                id="birthDate"
-                aria-required="true"
-                aria-invalid={errors.birthDate ? 'true' : 'false'}
-                className={styles.date__picker}
-              />
+              <div className={styles.input__field}>
+                <div className={styles.field}>
+                  <Input
+                    label="Day"
+                    id="birthDay"
+                    name="birthDay"
+                    variant="select"
+                    inputClass={
+                      errors.birthDay
+                        ? 'got_error regular_input'
+                        : 'regular_input'
+                    }
+                    error={errors.birthDay}
+                    ariaRequired="true"
+                    ariaInvalid={errors.birthDay ? 'true' : 'false'}
+                    register={register('birthDay', {
+                      required: {
+                        value: true,
+                        message: 'Please confirm your birth day',
+                      },
+                    })}
+                    options={countryOptions}
+                  />
+                </div>
+                <div className={styles.field}>
+                  <Input
+                    label="Month"
+                    id="birthMonth"
+                    name="birthMonth"
+                    variant="select"
+                    inputClass={
+                      errors.birthMonth
+                        ? 'got_error regular_input'
+                        : 'regular_input'
+                    }
+                    error={errors.birthMonth}
+                    ariaRequired="true"
+                    ariaInvalid={errors.birthMonth ? 'true' : 'false'}
+                    register={register('birthMonth', {
+                      required: {
+                        value: true,
+                        message: 'Please confirm your birth month',
+                      },
+                    })}
+                    options={countryOptions}
+                  />
+                </div>
+                <div className={styles.field}>
+                  <Input
+                    label="Year"
+                    id="birthYear"
+                    name="birthYear"
+                    variant="select"
+                    inputClass={
+                      errors.birthYear
+                        ? 'got_error regular_input'
+                        : 'regular_input'
+                    }
+                    error={errors.birthYear}
+                    ariaRequired="true"
+                    ariaInvalid={errors.birthYear ? 'true' : 'false'}
+                    register={register('birthYear', {
+                      required: {
+                        value: true,
+                        message: 'Please confirm your birth year',
+                      },
+                    })}
+                    options={countryOptions}
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <div className={styles.input__field}>

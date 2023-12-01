@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './styles.module.scss'
 
 interface InputProps {
-  placeholder: string
+  label: string
   id: string
   type?: string
   name: string
@@ -17,7 +17,7 @@ interface InputProps {
 }
 
 const Input: React.FC<InputProps> = ({
-  placeholder,
+  label,
   id,
   type,
   name,
@@ -34,86 +34,92 @@ const Input: React.FC<InputProps> = ({
   const requiredField = ariaRequired == 'true' ? '*' : ''
   return (
     <>
-      {(() => {
-        switch (variant) {
-          case 'text':
-            return (
-              <>
-                <input
-                  id={id}
-                  type={type}
-                  name={name}
-                  autocorrect="on"
-                  spellcheck="true"
-                  placeholder={`${placeholder} ${requiredField}`}
-                  className={`${styles.regular__input} ${gotError} ${inputClass}`}
-                  {...(ariaRequired
-                    ? {'aria-required': 'true'}
-                    : {'aria-required': 'false'})}
-                  {...(ariaInvalid
-                    ? {'aria-invalid': 'true'}
-                    : {'aria-invalid': 'false'})}
-                  {...register}
-                />
-              </>
-            )
-          case 'select':
-            return (
-              <>
-                <select
-                  id={id}
-                  name={name}
-                  placeholder={`${placeholder} ${requiredField}`}
-                  className={`${styles.select} ${styles.regular__input} ${gotError} ${inputClass}`}
-                  {...(ariaRequired
-                    ? {'aria-required': 'true'}
-                    : {'aria-required': 'false'})}
-                  {...(ariaInvalid
-                    ? {'aria-invalid': 'true'}
-                    : {'aria-invalid': 'false'})}
-                  {...register}
-                >
-                  <option
-                    value=""
-                    // hidden={true}
-                    disabled={true}
-                    // aria-hidden={true}
-                    selected
+      <div className={styles.input__box}>
+        {(() => {
+          switch (variant) {
+            case 'text':
+              return (
+                <>
+                  <input
+                    id={id}
+                    type={type}
+                    name={name}
+                    autocorrect="on"
+                    spellcheck="true"
+                    className={`${styles.regular__input} ${gotError} ${inputClass}`}
+                    {...(ariaRequired
+                      ? {'aria-required': 'true'}
+                      : {'aria-required': 'false'})}
+                    {...(ariaInvalid
+                      ? {'aria-invalid': 'true'}
+                      : {'aria-invalid': 'false'})}
+                    {...register}
+                  />
+                  <span aria-hidden="true" className={styles.label}>
+                    {`${label} ${requiredField}`}
+                  </span>
+                </>
+              )
+            case 'select':
+              return (
+                <>
+                  <select
+                    id={id}
+                    name={name}
+                    className={`${styles.select} ${styles.regular__input} ${gotError} ${inputClass}`}
+                    {...(ariaRequired
+                      ? {'aria-required': 'true'}
+                      : {'aria-required': 'false'})}
+                    {...(ariaInvalid
+                      ? {'aria-invalid': 'true'}
+                      : {'aria-invalid': 'false'})}
+                    {...register}
                   >
-                    {`${placeholder} ${requiredField}`}
-                  </option>
-                  {options?.map((item) => (
-                    <option key={item.value} className={styles.selected}>
-                      {item.label}
-                    </option>
-                  ))}
-                </select>
-              </>
-            )
-          case 'message':
-            return (
-              <>
-                <textarea
-                  id={id}
-                  name={name}
-                  placeholder={`${placeholder} ${requiredField}`}
-                  className={`${styles.regular__input} ${gotError} ${inputClass}`}
-                  {...(ariaRequired
-                    ? {'aria-required': 'true'}
-                    : {'aria-required': 'false'})}
-                  {...(ariaInvalid
-                    ? {'aria-invalid': 'true'}
-                    : {'aria-invalid': 'false'})}
-                  rows={rows}
-                  spellCheck="false"
-                  {...register}
-                />
-              </>
-            )
-          default:
-            return 'text'
-        }
-      })()}
+                    <option
+                      value=""
+                      hidden={true}
+                      disabled={true}
+                      aria-hidden={true}
+                      selected
+                    />
+                    {options?.map((item) => (
+                      <option key={item.value} className={styles.selected}>
+                        {item.label}
+                      </option>
+                    ))}
+                  </select>
+                  <span aria-hidden="true" className={styles.label}>
+                    {`${label} ${requiredField}`}
+                  </span>
+                </>
+              )
+            case 'message':
+              return (
+                <>
+                  <textarea
+                    id={id}
+                    name={name}
+                    className={`${styles.regular__input} ${gotError} ${inputClass}`}
+                    {...(ariaRequired
+                      ? {'aria-required': 'true'}
+                      : {'aria-required': 'false'})}
+                    {...(ariaInvalid
+                      ? {'aria-invalid': 'true'}
+                      : {'aria-invalid': 'false'})}
+                    rows={rows}
+                    spellCheck="false"
+                    {...register}
+                  />
+                  <span aria-hidden="true" className={styles.label}>
+                    {`${label} ${requiredField}`}
+                  </span>
+                </>
+              )
+            default:
+              return 'text'
+          }
+        })()}
+      </div>
       {error && (
         <div className={styles.error_message__wrap}>
           <span className={styles.got_error_message} role="alert">

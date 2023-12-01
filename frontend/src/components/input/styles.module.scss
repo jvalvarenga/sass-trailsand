@@ -9,9 +9,34 @@
   margin-bottom: var(--gap-content);
 }
 
+.input__box {
+  position: relative;
+  width: auto;
+
+  .regular__input:valid ~ span,
+  .regular__input:focus ~ span {
+    color: var(--color-button-hover);
+    transform: translateX(10px) translateY(-6px);
+    font-size: 0.88rem;
+    padding: 0 10px;
+    background-color: var(--color-green-bg);
+  }
+
+  .got_error__input:valid ~ span,
+  .got_error__input:focus ~ span {
+    color: var(--color-error);
+  }
+}
+
 .label {
-  font-size: 0.95rem;
-  color: var(--color-black);
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 13px 8px;
+  pointer-events: none;
+  font-size: 1rem;
+  color: #999999;
+  transition: 0.3s;
 }
 
 .regular__input {
@@ -20,17 +45,17 @@
   width: 100%;
   outline: none;
   border: 1px solid var(--color-grey);
-  background-color: var(--color-white);
+  background-color: transparent;
   padding: 6px;
-  height: 2.2rem;
+  height: 2.5rem;
   font-size: 16px;
-  color: var(--color-dark-green);
+  color: #ffffff;
   transition:
     border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
 
   &:focus {
-    border-color: var(--color-primary);
+    border-color: var(--color-button-hover);
   }
 
   &::placeholder,
@@ -62,7 +87,7 @@
   font-size: 16px;
   color: #999999;
   background: url('/images/icons/expand-arrow-icon.png') calc(100% - 10px)
-    center/15px no-repeat #fff;
+    center/15px no-repeat transparent;
   display: block;
 
   &:valid {
@@ -93,10 +118,8 @@
 
 .got_error__input {
   border-color: var(--color-error);
+
   &:focus {
     border-color: var(--color-error);
-    box-shadow:
-      0 0 3px 1px rgba(194, 57, 52, 0.5),
-      inset 0 0 3px 1px rgba(194, 57, 52, 0.5);
   }
 }

@@ -51,7 +51,7 @@
   margin-top: 6px;
 }
 
-.date__field {
+.date__field__text {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
@@ -68,15 +68,6 @@
     font-weight: 400;
     opacity: 0.8;
   }
-}
-
-.date__picker {
-  width: 100%;
-  height: 2.2rem;
-  background-color: #fff;
-  border-radius: 4px !important;
-  outline: none !important;
-  padding: 3px;
 }
 
 .btn__container {

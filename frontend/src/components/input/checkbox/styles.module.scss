@@ -35,15 +35,18 @@
   cursor: pointer;
   display: inline-block;
   margin: 0;
-  width: 16px;
-  height: 16px;
-  border: 2px solid var(--color-primary);
+  width: 15px;
+  height: 15px;
   background-color: var(--color-white);
   overflow: hidden;
   border-radius: 3px;
   transform: translateY(-1px);
   display: grid;
   place-content: center;
+
+  &.color__error {
+    border: 1px solid var(--color-error);
+  }
 
   &::before {
     content: '';
