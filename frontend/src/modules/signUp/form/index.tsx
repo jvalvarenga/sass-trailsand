@@ -45,8 +45,6 @@ const SignUpForm: React.FC = () => {
   >([])
   const [modalOpen, setModalOpen] = useState(false)
 
-  const DisableButton = isLoading ? styles.disabled : ''
-
   // import select content
   useEffect(() => {
     const countryData = require('../../../data/country.json') as FormValues[]
@@ -91,8 +89,6 @@ const SignUpForm: React.FC = () => {
   const handleMonthChange = (e: any) => {
     setSelectedMonth(e.target.value)
   }
-
-  console.log('Hello world!', selectedMonth)
 
   const days = (selectedMonth: string, selectedYear: string) => {
     const numDays = daysInMonth(String(selectedMonth), Number(selectedYear))
@@ -147,24 +143,33 @@ const SignUpForm: React.FC = () => {
     setLoading(false)
   }
 
-  const {values, errors, isSubmitting, handleBlur, handleChange, handleSubmit} =
-    useFormik({
-      initialValues: {
-        email: '',
-        password: '',
-        confirmPassword: '',
-        firstName: '',
-        lastName: '',
-        month: '',
-        monthId: 0,
-        day: '',
-        year: '',
-        country: '',
-        acceptTerms: false,
-      },
-      validationSchema: basicSchema,
-      onSubmit,
-    })
+  const {
+    values,
+    errors,
+    touched,
+    isSubmitting,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+  } = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      confirmPassword: '',
+      firstName: '',
+      lastName: '',
+      month: '',
+      monthId: 0,
+      day: '',
+      year: '',
+      country: '',
+      acceptTerms: false,
+    },
+    validationSchema: basicSchema,
+    onSubmit,
+  })
+
+  const DisableButton = isSubmitting ? styles.disabled : ''
 
   return (
     <div className={styles.wrapper}>
@@ -192,11 +197,17 @@ const SignUpForm: React.FC = () => {
                 value={values.firstName}
                 variant="text"
                 inputClass={
-                  errors.lastName ? 'got_error regular_input' : 'regular_input'
+                  errors.firstName && touched.firstName
+                    ? 'got_error regular_input'
+                    : 'regular_input'
                 }
-                error={errors.firstName}
+                error={
+                  errors.firstName && touched.firstName && errors.firstName
+                }
                 ariaRequired="true"
-                ariaInvalid={errors.firstName ? 'true' : 'false'}
+                ariaInvalid={
+                  errors.firstName && touched.firstName ? 'true' : 'false'
+                }
               />
             </div>
             <div className={styles.field}>
@@ -210,11 +221,15 @@ const SignUpForm: React.FC = () => {
                 value={values.lastName}
                 variant="text"
                 inputClass={
-                  errors.lastName ? 'got_error regular_input' : 'regular_input'
+                  errors.lastName && touched.lastName
+                    ? 'got_error regular_input'
+                    : 'regular_input'
                 }
-                error={errors.lastName}
+                error={errors.lastName && touched.lastName && errors.lastName}
                 ariaRequired="true"
-                ariaInvalid={errors.lastName ? 'true' : 'false'}
+                ariaInvalid={
+                  errors.lastName && touched.lastName ? 'true' : 'false'
+                }
               />
             </div>
           </div>
@@ -230,11 +245,13 @@ const SignUpForm: React.FC = () => {
                 onBlur={handleBlur}
                 value={values.email}
                 inputClass={
-                  errors.email ? 'got_error regular_input' : 'regular_input'
+                  errors.email && touched.email
+                    ? 'got_error regular_input'
+                    : 'regular_input'
                 }
-                error={errors.email}
+                error={errors.email && touched.email && errors.email}
                 ariaRequired="true"
-                ariaInvalid={errors.email ? 'true' : 'false'}
+                ariaInvalid={errors.email && touched.email ? 'true' : 'false'}
               />
             </div>
           </div>
@@ -249,11 +266,15 @@ const SignUpForm: React.FC = () => {
                 onBlur={handleBlur}
                 value={values.country}
                 inputClass={
-                  errors.country ? 'got_error regular_input' : 'regular_input'
+                  errors.country && touched.country
+                    ? 'got_error regular_input'
+                    : 'regular_input'
                 }
-                error={errors.country}
+                error={errors.country && touched.country && errors.country}
                 ariaRequired="true"
-                ariaInvalid={errors.country ? 'true' : 'false'}
+                ariaInvalid={
+                  errors.country && touched.country ? 'true' : 'false'
+                }
                 options={countryOptions}
               />
             </div>
@@ -270,11 +291,15 @@ const SignUpForm: React.FC = () => {
                 onBlur={handleBlur}
                 value={values.password}
                 inputClass={
-                  errors.password ? 'got_error regular_input' : 'regular_input'
+                  errors.password && touched.password
+                    ? 'got_error regular_input'
+                    : 'regular_input'
                 }
-                error={errors.password}
+                error={errors.password && touched.password && errors.password}
                 ariaRequired="true"
-                ariaInvalid={errors.password ? 'true' : 'false'}
+                ariaInvalid={
+                  errors.password && touched.password ? 'true' : 'false'
+                }
               />
             </div>
           </div>
@@ -288,13 +313,17 @@ const SignUpForm: React.FC = () => {
                 variant="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.confirmPassword}
+                value={values.confirmPassword && touched.confirmPassword}
                 inputClass={
-                  errors.confirmPassword
+                  errors.confirmPassword && touched.confirmPassword
                     ? 'got_error regular_input'
                     : 'regular_input'
                 }
-                error={errors.confirmPassword}
+                error={
+                  errors.confirmPassword &&
+                  touched.confirmPassword &&
+                  errors.confirmPassword
+                }
                 ariaRequired="true"
                 ariaInvalid={errors.confirmPassword ? 'true' : 'false'}
               />
@@ -323,11 +352,15 @@ const SignUpForm: React.FC = () => {
                     onBlur={handleBlur}
                     value={values.month}
                     inputClass={
-                      errors.month ? 'got_error regular_input' : 'regular_input'
+                      errors.month && touched.month
+                        ? 'got_error regular_input'
+                        : 'regular_input'
                     }
-                    error={errors.month}
+                    error={errors.month && touched.month && errors.month}
                     ariaRequired="true"
-                    ariaInvalid={errors.month ? 'true' : 'false'}
+                    ariaInvalid={
+                      errors.month && touched.month ? 'true' : 'false'
+                    }
                     options={monthOptions}
                   />
                 </div>
@@ -341,11 +374,13 @@ const SignUpForm: React.FC = () => {
                     onBlur={handleBlur}
                     value={values.day}
                     inputClass={
-                      errors.day ? 'got_error regular_input' : 'regular_input'
+                      errors.day && touched.day
+                        ? 'got_error regular_input'
+                        : 'regular_input'
                     }
-                    error={errors.day}
+                    error={errors.day && touched.day && errors.day}
                     ariaRequired="true"
-                    ariaInvalid={errors.day ? 'true' : 'false'}
+                    ariaInvalid={errors.day && touched.day ? 'true' : 'false'}
                     // options={days.map((day) => ({value: day, label: day}))}
                     options={daysOptions}
                   />
@@ -360,11 +395,13 @@ const SignUpForm: React.FC = () => {
                     onBlur={handleBlur}
                     value={values.year}
                     inputClass={
-                      errors.year ? 'got_error regular_input' : 'regular_input'
+                      errors.year && touched.year
+                        ? 'got_error regular_input'
+                        : 'regular_input'
                     }
-                    error={errors.year}
+                    error={errors.year && touched.year && errors.year}
                     ariaRequired="true"
-                    ariaInvalid={errors.year ? 'true' : 'false'}
+                    ariaInvalid={errors.year && touched.year ? 'true' : 'false'}
                     options={years.map((year) => ({value: year, label: year}))}
                   />
                 </div>
@@ -397,7 +434,11 @@ const SignUpForm: React.FC = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.acceptTerms}
-                error={errors.acceptTerms}
+                error={
+                  errors.acceptTerms &&
+                  touched.acceptTerms &&
+                  errors.acceptTerms
+                }
                 ariaRequired="true"
                 light
               />
@@ -409,7 +450,7 @@ const SignUpForm: React.FC = () => {
               form="signup-form"
               type="submit"
               className={`${DisableButton} ${styles.btn}`}
-              disabled={isLoading}
+              disabled={isSubmitting}
             >
               <span className="text">
                 {isLoading ? (

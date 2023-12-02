@@ -3,13 +3,12 @@ import Link from 'next/link'
 import styles from './styles.module.scss'
 
 interface LinkOrButtonProps {
-  href?: string
+  href?: any
   children?: ReactNode
   isButton?: boolean
-  type?: string
+  type?: 'button' | 'submit' | 'reset' | undefined
   className?: any
   ariaExpanded?: any
-  ariaHaspopup?: string
   onClick?: any
   onMouseOver?: any
   onMouseOut?: any
@@ -22,7 +21,6 @@ const NavLinks: React.FC<LinkOrButtonProps> = ({
   type,
   className,
   ariaExpanded,
-  ariaHaspopup,
   onClick,
   onMouseOver,
   onMouseOut,
@@ -31,7 +29,6 @@ const NavLinks: React.FC<LinkOrButtonProps> = ({
     return (
       <button
         type={type}
-        aria-haspopup={ariaHaspopup}
         aria-expanded={ariaExpanded}
         onClick={onClick}
         onMouseOver={onMouseOver}

@@ -1,0 +1,16 @@
+.section {
+  width: 100%;
+  height: auto;
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-green-bg);
+}
+
+.content {
+  width: 100%;
+  min-height: inherit;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+}

@@ -89,6 +89,7 @@ const Input: React.FC<InputProps> = ({
                       hidden={true}
                       disabled={true}
                       aria-hidden={true}
+                      defaultValue="true"
                       selected
                     />
                     {options?.map((item) => (

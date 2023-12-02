@@ -1,7 +1,8 @@
 import * as yup from 'yup'
 
-const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/
-// min 5 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit.
+const passwordRules =
+  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/
+// min 8 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit.
 
 export const basicSchema = yup.object().shape({
   firstName: yup.string().required('Please enter your name'),
@@ -15,7 +16,10 @@ export const basicSchema = yup.object().shape({
   password: yup
     .string()
     .min(8, 'Password must be at least 8 characters')
-    .matches(passwordRules, {message: 'Please create a stronger password'})
+    .matches(passwordRules, {
+      message:
+        'Password must contain upper and lower case letters, numbers and special characters',
+    })
     .required('Please enter a password'),
   confirmPassword: yup
     .string()
@@ -25,4 +29,19 @@ export const basicSchema = yup.object().shape({
   month: yup.string().required('Please select your birth month'),
   year: yup.string().required('Please select your birth year'),
   acceptTerms: yup.boolean().oneOf([true], 'Please accept the terms'),
+})
+
+export const loginSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email('Please enter a valid email')
+    .required('Please enter your email'),
+  password: yup
+    .string()
+    .min(8, 'Password must be at least 8 characters')
+    .matches(passwordRules, {
+      message:
+        'Password must contain upper and lower case letters, numbers and special characters',
+    })
+    .required('Please enter your password'),
 })

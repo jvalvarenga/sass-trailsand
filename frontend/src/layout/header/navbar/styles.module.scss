@@ -87,7 +87,7 @@
   list-style: none;
   display: flex;
   align-items: center;
-  gap: 2.5rem;
+  gap: 1.5rem;
   overflow-x: visible;
 
   @media screen and (max-width: var(--md-breakpoints)) {
@@ -104,7 +104,7 @@
   display: flex;
   align-items: center;
   width: max-content;
-  margin-left: 2.5rem;
+  margin-left: 1.5rem;
 
   @media screen and (max-width: var(--md-breakpoints)) {
     position: absolute;
