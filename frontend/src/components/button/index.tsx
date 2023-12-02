@@ -9,9 +9,9 @@ interface ButtonProps {
   onClick?: () => void
   variant?: 'primary' | 'secondary'
   className?: any
-  form: string
-  disabled: any
-  type: 'button' | 'reset' | 'submit' | undefined
+  form?: any
+  disabled?: any
+  type?: 'button' | 'reset' | 'submit' | undefined
 }
 
 const Button: React.FC<ButtonProps> = ({

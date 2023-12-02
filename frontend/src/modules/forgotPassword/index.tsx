@@ -1,16 +1,14 @@
 import styles from './styles.module.scss'
-import SignUpForm from './form'
-import ImageCol from './imageCol'
+import ForgotPasswordForm from './form'
 
-const SignUp = () => {
+const ForgotPassword = () => {
   return (
     <section className={styles.section}>
       <div className={styles.content}>
-        <SignUpForm />
-        <ImageCol />
+        <ForgotPasswordForm />
       </div>
     </section>
   )
 }
 
-export default SignUp
+export default ForgotPassword

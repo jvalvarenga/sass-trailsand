@@ -9,9 +9,37 @@
   margin-bottom: var(--gap-content);
 }
 
+.input__box {
+  position: relative;
+  width: auto;
+
+  .regular__input:focus ~ span {
+    color: var(--color-button-hover);
+  }
+
+  .valid__field ~ span,
+  .regular__input:focus ~ span {
+    transform: translateX(10px) translateY(-6px);
+    font-size: 0.88rem;
+    padding: 0 10px;
+    background-color: var(--color-green-bg);
+  }
+
+  .got_error__input ~ span,
+  .got_error__input:focus ~ span {
+    color: var(--color-error);
+  }
+}
+
 .label {
-  font-size: 0.95rem;
-  color: var(--color-black);
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 13px 8px;
+  pointer-events: none;
+  font-size: 1rem;
+  color: #888888;
+  transition: 0.3s;
 }
 
 .regular__input {
@@ -20,20 +48,36 @@
   width: 100%;
   outline: none;
   border: 1px solid var(--color-grey);
-  background-color: var(--color-white);
-  padding: 5px;
+  background-color: transparent;
+  padding: 6px;
+  height: 2.5rem;
+  font-size: 16px;
+  color: #ffffff;
   transition:
     border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
 
   &:focus {
-    border-color: var(--color-primary);
+    border-color: var(--color-button-hover);
+  }
+
+  &::placeholder,
+  textarea::placeholder {
+    font-size: 16px;
+    color: #888888;
+    opacity: 1 !important;
+  }
+
+  &:-moz-placeholder {
+    color: #888888;
+    opacity: 1 !important;
   }
 }
 
 .text__area {
-  padding: 5px;
+  padding: 6px;
   resize: vertical;
+  font-size: 16px;
   line-height: 20px;
 }
 
@@ -43,29 +87,34 @@
   -moz-appearance: none;
   appearance: none;
   cursor: pointer;
+  font-size: 16px;
+  color: #ffffff;
   background: url('/images/icons/expand-arrow-icon.png') calc(100% - 10px)
-    center/15px no-repeat #fff;
+    center/15px no-repeat transparent;
   display: block;
 
-  .input__container {
-    position: relative;
-    width: 100%;
+  option[value=''][disabled] {
+    display: none;
   }
+
+  option {
+    color: #000000;
+  }
+}
+
+.error_message__wrap {
+  margin-top: 0.3em;
 }
 
 .got_error_message {
   color: var(--color-error);
-  font-size: 1rem;
-  margin-top: 0.4em;
+  font-size: 0.9rem;
 }
 
 .got_error__input {
   border-color: var(--color-error);
+
   &:focus {
     border-color: var(--color-error);
-    box-shadow:
-      0 0 3px 1px rgba(194, 57, 52, 0.5),
-      inset 0 0 3px 1px rgba(194, 57, 52, 0.5);
   }
 }
-

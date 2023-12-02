@@ -1,7 +1,7 @@
 .section {
   width: 100%;
   height: auto;
-  min-height: 50vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   background-color: var(--color-green-bg);
@@ -12,5 +12,6 @@
   min-height: inherit;
   height: auto;
   display: flex;
-  justify-content: space-between;
+  align-items: start;
+  justify-content: start;
 }
